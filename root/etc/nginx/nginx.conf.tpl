@@ -14,6 +14,7 @@ http {
         ## https://test.net/value/test will proxy to https://value.test.net/test
         location ~* ^/([^/]+)(.*) {
             proxy_pass ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE}/$2;
+            proxy_redirect ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE} /$1;
             proxy_cookie_path / /$1;
         }
         
@@ -27,7 +28,7 @@ http {
                       '"$http_user_agent" "$http_x_forwarded_for"';
 }
 
-error_log  /dev/stdout debug;
+error_log  /dev/stdout ${LOG_LEVEL};
 events {
     worker_connections  2048;
 }

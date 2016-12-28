@@ -6,13 +6,15 @@ echo "
       DNS SERVER ${DNS_SERVER}
       MBASS HOST ${MBAAS_HOST_BASE}
       MBAAS PROTOCOL ${MBAAS_PROTOCOL}
-      CORE_SERVICE_URL {CORE_SERVICE_URL}
+      CORE_SERVICE_URL ${CORE_SERVICE_URL}
+      LOG_LEVEL ${LOG_LEVEL}
 " 
 
 envsubst '${DNS_SERVER}
           ${MBAAS_HOST_BASE}
           ${MBAAS_PROTOCOL}
-          ${CORE_SERVICE_URL}' < "/etc/nginx/nginx.conf.tpl" > "/etc/nginx/nginx.conf"
+          ${CORE_SERVICE_URL}
+          ${LOG_LEVEL}' < "/etc/nginx/nginx.conf.tpl" > "/etc/nginx/nginx.conf"
 
 echo "Starting nginx server"
 exec nginx -c /etc/nginx/nginx.conf
