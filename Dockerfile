@@ -4,7 +4,7 @@ RUN yum -y install --setopt=tsflags=nodocs centos-release-scl-rh && \
     yum -y update --setopt=tsflags=nodocs && \
     yum -y install --setopt=tsflags=nodocs gettext scl-utils rh-nginx18 && \
     yum clean all && \
-    chown nginx -Rf /var/opt/rh/rh-nginx18
+    chown 998 -Rf /var/opt/rh/rh-nginx18
 
 ENV BASH_ENV=/usr/bin/nginx_scl_enable \
     ENV=/usr/bin/nginx_scl_enable \
@@ -20,7 +20,6 @@ ENV DNS_SERVER=8.8.8.8 \
     CORE_SERVICE_URL=localhost \
     LOG_LEVEL=info
 
-USER nginx
-EXPOSE 8080
+USER 998
 
 CMD [ "nginx18" ]
