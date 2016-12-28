@@ -20,7 +20,7 @@ http {
         
         ## Match root to proxy to platform gui.
         location = / {
-            proxy_pass ${CORE_SERVICE_URL};
+            return 301 ${CORE_SERVICE_URL};
         }
     }
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
