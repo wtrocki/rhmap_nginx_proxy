@@ -1,10 +1,11 @@
 {
-    "kind": "List",
+    "kind": "Template",
     "apiVersion": "v1",
     "metadata": {
-        "name": "rhmap-proxy",
+
+        "name": "nginx-proxy",
         "description": "RHMAP proxy",
-        "tags": "rhmap,mobile"
+        "tags": "rhmap,mobile,nginx,proxy"
     },
     "parameters": [
         {
@@ -15,52 +16,26 @@
         },
         {
             "name": "CORE_SERVICE_URL",
-            "value": "localhost",
+            "value": "http://localhost/invalid",
             "description": "Full url to RHMAP platform GUI. For example https://rhmap.yourdomain.com",
+            "required": true
+        },
+        {
+            "name": "EXTERNAL_ROUTE",
+            "value": "",
+            "description": "External route to be created on router. Leave empty to autogenerate",
             "required": false
         }
     ],
-    "items": [
+    "objects": [
         {
-            "kind": "ImageStream",
+            "kind": "DeploymentConfig",
             "apiVersion": "v1",
             "metadata": {
                 "name": "nginx-proxy",
                 "labels": {
                     "app": "nginx-proxy"
                 }
-            },
-            "spec": {
-                "tags": [
-                    {
-                        "name": "latest",
-                        "annotations": {
-                            "openshift.io/imported-from": "wtrocki/nginx-proxy"
-                        },
-                        "from": {
-                            "kind": "DockerImage",
-                            "name": "wtrocki/nginx-proxy"
-                        },
-                        "generation": 1,
-                        "importPolicy": {}
-                    }
-                ]
-            },
-            "status": {
-                "dockerImageRepository": ""
-            }
-        },
-        {
-            "kind": "DeploymentConfig",
-            "apiVersion": "v1",
-            "metadata": {
-                "name": "nginx-proxy",
-                "generation": 2,
-                "creationTimestamp": null,
-                "labels": {
-                    "app": "nginx-proxy"
-                },
-                "annotations": {}
             },
             "spec": {
                 "strategy": {
@@ -77,20 +52,6 @@
                 "triggers": [
                     {
                         "type": "ConfigChange"
-                    },
-                    {
-                        "type": "ImageChange",
-                        "imageChangeParams": {
-                            "automatic": true,
-                            "containerNames": [
-                                "nginx-proxy"
-                            ],
-                            "from": {
-                                "kind": "ImageStreamTag",
-                                "namespace": "wtr-proxy",
-                                "name": "nginx-proxy:latest"
-                            }
-                        }
                     }
                 ],
                 "replicas": 1,
@@ -247,7 +208,7 @@
                 }
             },
             "spec": {
-                "host": "proxy-route-wtr-proxy.osm3.feedhenry.net",
+                "host": "${EXTERNAL_ROUTE}",
                 "to": {
                     "kind": "Service",
                     "name": "nginx-proxy",
