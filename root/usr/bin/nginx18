@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e -o pipefail
 
-echo "Seeding configuration"
+echo "Updating configuration"
 echo "      
       DNS SERVER ${DNS_SERVER}
       MBASS HOST ${MBAAS_HOST_BASE}
