@@ -1,0 +1,420 @@
+{
+    "kind": "List",
+    "apiVersion": "v1",
+    "metadata": {
+        "name": "rhmap-proxy",
+        "description": "RHMAP proxy",
+        "tags": "rhmap,mobile"
+    },
+    "parameters": [
+        {
+            "name": "MBAAS_HOST_BASE",
+            "value": "",
+            "description": "base hostname (without subdomain) for mbaas",
+            "required": true
+        },
+        {
+            "name": "CORE_SERVICE_URL",
+            "value": "localhost",
+            "description": "Full url to RHMAP platform GUI. For example https://rhmap.yourdomain.com",
+            "required": false
+        }
+    ],
+    "items": [
+        {
+            "kind": "ImageStream",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nginx-proxy",
+                "labels": {
+                    "app": "nginx-proxy"
+                }
+            },
+            "spec": {
+                "tags": [
+                    {
+                        "name": "latest",
+                        "annotations": {
+                            "openshift.io/imported-from": "wtrocki/nginx-proxy"
+                        },
+                        "from": {
+                            "kind": "DockerImage",
+                            "name": "wtrocki/nginx-proxy"
+                        },
+                        "generation": 1,
+                        "importPolicy": {}
+                    }
+                ]
+            },
+            "status": {
+                "dockerImageRepository": ""
+            }
+        },
+        {
+            "kind": "DeploymentConfig",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nginx-proxy",
+                "generation": 2,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "nginx-proxy"
+                },
+                "annotations": {}
+            },
+            "spec": {
+                "strategy": {
+                    "type": "Rolling",
+                    "rollingParams": {
+                        "updatePeriodSeconds": 1,
+                        "intervalSeconds": 1,
+                        "timeoutSeconds": 600,
+                        "maxUnavailable": "25%",
+                        "maxSurge": "25%"
+                    },
+                    "resources": {}
+                },
+                "triggers": [
+                    {
+                        "type": "ConfigChange"
+                    },
+                    {
+                        "type": "ImageChange",
+                        "imageChangeParams": {
+                            "automatic": true,
+                            "containerNames": [
+                                "nginx-proxy"
+                            ],
+                            "from": {
+                                "kind": "ImageStreamTag",
+                                "namespace": "wtr-proxy",
+                                "name": "nginx-proxy:latest"
+                            }
+                        }
+                    }
+                ],
+                "replicas": 1,
+                "test": false,
+                "selector": {
+                    "app": "nginx-proxy",
+                    "deploymentconfig": "nginx-proxy"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "nginx-proxy",
+                            "deploymentconfig": "nginx-proxy"
+                        },
+                        "annotations": {}
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "nginx-proxy",
+                                "image": "wtrocki/nginx-proxy",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "MBAAS_HOST_BASE",
+                                        "value": "${MBAAS_HOST_BASE}"
+                                    },
+                                    {
+                                        "name": "CORE_SERVICE_URL",
+                                        "value": "${CORE_SERVICE_URL}"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {
+                            "runAsUser": 998
+                        }
+                    }
+                }
+            },
+            "status": {
+                "observedGeneration": 2,
+                "replicas": 1,
+                "updatedReplicas": 1,
+                "unavailableReplicas": 1
+            }
+        },
+        {
+            "kind": "ReplicationController",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nginx-proxy-1",
+                "generation": 1,
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "nginx-proxy",
+                    "openshift.io/deployment-config.name": "nginx-proxy"
+                },
+                "annotations": {
+                    "openshift.io/deployer-pod.name": "nginx-proxy-1-deploy",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "nginx-proxy",
+                    "openshift.io/deployment.phase": "Complete",
+                    "openshift.io/deployment.replicas": "1",
+                    "openshift.io/encoded-deployment-config": "{\"kind\":\"DeploymentConfig\",\"apiVersion\":\"v1\",\"metadata\":{\"name\":\"nginx-proxy\",\"namespace\":\"wtr-proxy\",\"selfLink\":\"/oapi/v1/namespaces/wtr-proxy/deploymentconfigs/nginx-proxy\",\"uid\":\"9bb75617-cd2f-11e6-89c0-0abb8905d551\",\"resourceVersion\":\"29154088\",\"generation\":2,\"creationTimestamp\":\"2016-12-28T18:58:24Z\",\"labels\":{\"app\":\"nginx-proxy\"},\"annotations\":{\"openshift.io/generated-by\":\"OpenShiftWebConsole\"}},\"spec\":{\"strategy\":{\"type\":\"Rolling\",\"rollingParams\":{\"updatePeriodSeconds\":1,\"intervalSeconds\":1,\"timeoutSeconds\":600,\"maxUnavailable\":\"25%\",\"maxSurge\":\"25%\"},\"resources\":{}},\"triggers\":[{\"type\":\"ConfigChange\"},{\"type\":\"ImageChange\",\"imageChangeParams\":{\"automatic\":true,\"containerNames\":[\"nginx-proxy\"],\"from\":{\"kind\":\"ImageStreamTag\",\"namespace\":\"wtr-proxy\",\"name\":\"nginx-proxy:latest\"}}}],\"replicas\":1,\"test\":false,\"selector\":{\"app\":\"nginx-proxy\",\"deploymentconfig\":\"nginx-proxy\"},\"template\":{\"metadata\":{\"creationTimestamp\":null,\"labels\":{\"app\":\"nginx-proxy\",\"deploymentconfig\":\"nginx-proxy\"},\"annotations\":{\"openshift.io/generated-by\":\"OpenShiftWebConsole\"}},\"spec\":{\"containers\":[{\"name\":\"nginx-proxy\",\"image\":\"wtrocki/nginx-proxy\",\"ports\":[{\"containerPort\":8080,\"protocol\":\"TCP\"}],\"env\":[{\"name\":\"MBAAS_HOST_BASE\",\"value\":\"osm1.feedhenry.net\"},{\"name\":\"MBAAS_PROTOCOL\",\"value\":\"https\"},{\"name\":\"CORE_SERVICE_URL\",\"value\":\"https://rhmap.osm3.feedhenry.net\"}],\"resources\":{},\"terminationMessagePath\":\"/dev/termination-log\",\"imagePullPolicy\":\"Always\"}],\"restartPolicy\":\"Always\",\"terminationGracePeriodSeconds\":30,\"dnsPolicy\":\"ClusterFirst\",\"securityContext\":{}}}},\"status\":{\"latestVersion\":1,\"observedGeneration\":1}}\n"
+                }
+            },
+            "spec": {
+                "replicas": 1,
+                "selector": {
+                    "app": "nginx-proxy",
+                    "deployment": "nginx-proxy-1",
+                    "deploymentconfig": "nginx-proxy"
+                },
+                "template": {
+                    "metadata": {
+                        "creationTimestamp": null,
+                        "labels": {
+                            "app": "nginx-proxy",
+                            "deployment": "nginx-proxy-1",
+                            "deploymentconfig": "nginx-proxy"
+                        },
+                        "annotations": {
+                            "openshift.io/deployment-config.latest-version": "1",
+                            "openshift.io/deployment-config.name": "nginx-proxy",
+                            "openshift.io/deployment.name": "nginx-proxy-1",
+                            "openshift.io/generated-by": "OpenShiftWebConsole"
+                        }
+                    },
+                    "spec": {
+                        "containers": [
+                            {
+                                "name": "nginx-proxy",
+                                "image": "wtrocki/nginx-proxy",
+                                "ports": [
+                                    {
+                                        "containerPort": 8080,
+                                        "protocol": "TCP"
+                                    }
+                                ],
+                                "env": [
+                                    {
+                                        "name": "MBAAS_HOST_BASE",
+                                        "value": "osm1.feedhenry.net"
+                                    },
+                                    {
+                                        "name": "MBAAS_PROTOCOL",
+                                        "value": "https"
+                                    },
+                                    {
+                                        "name": "CORE_SERVICE_URL",
+                                        "value": "https://rhmap.osm3.feedhenry.net"
+                                    }
+                                ],
+                                "resources": {},
+                                "terminationMessagePath": "/dev/termination-log",
+                                "imagePullPolicy": "Always"
+                            }
+                        ],
+                        "restartPolicy": "Always",
+                        "terminationGracePeriodSeconds": 30,
+                        "dnsPolicy": "ClusterFirst",
+                        "securityContext": {}
+                    }
+                }
+            },
+            "status": {
+                "replicas": 0
+            }
+        },
+        {
+            "kind": "Route",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "proxy-route",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "nginx-proxy"
+                },
+                "annotations": {
+                    "openshift.io/host.generated": "true"
+                }
+            },
+            "spec": {
+                "host": "proxy-route-wtr-proxy.osm3.feedhenry.net",
+                "to": {
+                    "kind": "Service",
+                    "name": "nginx-proxy",
+                    "weight": 100
+                },
+                "port": {
+                    "targetPort": "8080-tcp"
+                },
+                "tls": {
+                    "termination": "edge",
+                    "insecureEdgeTerminationPolicy": "Redirect"
+                }
+            },
+            "status": {
+                "ingress": [
+                    {
+                        "host": "proxy-route-wtr-proxy.osm3.feedhenry.net",
+                        "routerName": "router",
+                        "conditions": [
+                            {
+                                "type": "Admitted",
+                                "status": "True",
+                                "lastTransitionTime": "2016-12-28T19:02:00Z"
+                            }
+                        ]
+                    }
+                ]
+            }
+        },
+        {
+            "kind": "Service",
+            "apiVersion": "v1",
+            "metadata": {
+                "name": "nginx-proxy",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "nginx-proxy"
+                },
+                "annotations": {
+                    "openshift.io/generated-by": "OpenShiftWebConsole"
+                }
+            },
+            "spec": {
+                "ports": [
+                    {
+                        "name": "8080-tcp",
+                        "protocol": "TCP",
+                        "port": 8080,
+                        "targetPort": 8080
+                    }
+                ],
+                "selector": {
+                    "deploymentconfig": "nginx-proxy"
+                },
+                "type": "ClusterIP",
+                "sessionAffinity": "None"
+            },
+            "status": {
+                "loadBalancer": {}
+            }
+        },
+        {
+            "kind": "Pod",
+            "apiVersion": "v1",
+            "metadata": {
+                "generateName": "nginx-proxy-1-",
+                "creationTimestamp": null,
+                "labels": {
+                    "app": "nginx-proxy",
+                    "deployment": "nginx-proxy-1",
+                    "deploymentconfig": "nginx-proxy"
+                },
+                "annotations": {
+                    "kubernetes.io/created-by": "{\"kind\":\"SerializedReference\",\"apiVersion\":\"v1\",\"reference\":{\"kind\":\"ReplicationController\",\"namespace\":\"wtr-proxy\",\"name\":\"nginx-proxy-1\",\"uid\":\"b44136d3-cd2f-11e6-89c0-0abb8905d551\",\"apiVersion\":\"v1\",\"resourceVersion\":\"29154109\"}}\n",
+                    "openshift.io/deployment-config.latest-version": "1",
+                    "openshift.io/deployment-config.name": "nginx-proxy",
+                    "openshift.io/deployment.name": "nginx-proxy-1",
+                    "openshift.io/generated-by": "OpenShiftWebConsole",
+                    "openshift.io/scc": "restricted"
+                }
+            },
+            "spec": {
+                "volumes": [
+                    {
+                        "name": "default-token-sxh1g",
+                        "secret": {
+                            "secretName": "default-token-sxh1g"
+                        }
+                    }
+                ],
+                "containers": [
+                    {
+                        "name": "nginx-proxy",
+                        "image": "wtrocki/nginx-proxy",
+                        "ports": [
+                            {
+                                "containerPort": 8080,
+                                "protocol": "TCP"
+                            }
+                        ],
+                        "env": [
+                            {
+                                "name": "MBAAS_HOST_BASE",
+                                "value": "osm1.feedhenry.net"
+                            },
+                            {
+                                "name": "MBAAS_PROTOCOL",
+                                "value": "https"
+                            },
+                            {
+                                "name": "CORE_SERVICE_URL",
+                                "value": "https://rhmap.osm3.feedhenry.net"
+                            }
+                        ],
+                        "resources": {},
+                        "volumeMounts": [
+                            {
+                                "name": "default-token-sxh1g",
+                                "readOnly": true,
+                                "mountPath": "/var/run/secrets/kubernetes.io/serviceaccount"
+                            }
+                        ],
+                        "terminationMessagePath": "/dev/termination-log",
+                        "imagePullPolicy": "Always",
+                        "securityContext": {
+                            "capabilities": {
+                                "drop": [
+                                    "KILL",
+                                    "MKNOD",
+                                    "SETGID",
+                                    "SETUID",
+                                    "SYS_CHROOT"
+                                ]
+                            },
+                            "privileged": false,
+                            "seLinuxOptions": {
+                                "level": "s0:c79,c39"
+                            },
+                            "runAsUser": 1006240000
+                        }
+                    }
+                ],
+                "restartPolicy": "Always",
+                "terminationGracePeriodSeconds": 30,
+                "dnsPolicy": "ClusterFirst",
+                "nodeSelector": {
+                    "type": "compute"
+                },
+                "host": "10.10.0.141",
+                "serviceAccountName": "default",
+                "serviceAccount": "default",
+                "nodeName": "10.10.0.141",
+                "securityContext": {
+                    "seLinuxOptions": {
+                        "level": "s0:c79,c39"
+                    },
+                    "fsGroup": 1006240000
+                },
+                "imagePullSecrets": [
+                    {
+                        "name": "default-dockercfg-1wgsj"
+                    }
+                ]
+            },
+            "status": {
+                "phase": "Pending"
+            }
+        }
+    ]
+}
