@@ -26,6 +26,8 @@ To install proxy on openshift use supplied template
 
     oc new-app -f openshift/rhmap-nginx-proxy.json
 
+> Note: When running this template security context constraint should allow to run pods as users with UID bellow 1000 
+
 ### Docker
 
 Proxy can be launched on any operating system that supports docker (Windows, Linux and MacOSX)
