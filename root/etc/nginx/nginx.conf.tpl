@@ -13,7 +13,7 @@ http {
         ## Match every first element of the path and proxy to subdomain 
         ## https://test.net/value/test will proxy to https://value.test.net/test
         location ~* ^/([^/]+)(.*) {
-            proxy_pass ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE}/$2;
+            proxy_pass ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE}/$2$is_args$args;
             proxy_redirect ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE} /$1;
             proxy_cookie_path / /$1;
         }
@@ -21,6 +21,10 @@ http {
         ## Match root to proxy to platform gui.
         location = / {
             return 301 ${CORE_SERVICE_URL};
+        }
+
+        location = /favicon.ico {
+            log_not_found off;
         }
     }
     log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
