@@ -47,22 +47,22 @@ Run downloaded image
 
 ## Environment variables
 
-> MBAAS_HOST_BASE
+> MBAAS_HOST_BASE `required`
 
 OpenShift MbaaS hostname without subdomain part. 
 If your app has route `https://appname.mbaas.net`  then `MBAAS_HOST_BASE` should be set to `mbaas.net`
 
->  MBAAS_PROTOCOL
+>  MBAAS_PROTOCOL `optional`
 
 MbaaS protocol. By default https. Added for debug purposes
 
-> DNS_SERVER
+> DNS_SERVER `optional`
 
 DNS server that would be used to retrieve ips. 
 For internal networks you would need to specify your local DNS server.
 
 
-> CORE_SERVICE_URL
+> CORE_SERVICE_URL `optional`
 
 Full url to RHMAP gui. For example: `https://rhmap.yourdomain.net`
 If you do not wish to redirect to core service please redirect to any internal website that would be used as base for this domain.
