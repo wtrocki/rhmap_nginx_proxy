@@ -20,7 +20,7 @@ http {
         
         ## Match root to proxy to platform gui.
         location = / {
-            return 301 ${CORE_SERVICE_URL};
+            return 301 ${ROOT_REDIRECT_URL};
         }
 
         location = /favicon.ico {

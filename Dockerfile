@@ -17,7 +17,7 @@ RUN  chown nginx -Rf /etc/nginx
 ENV DNS_SERVER=8.8.8.8 \
     MBAAS_HOST_BASE=localhost  \
     MBAAS_PROTOCOL=https       \
-    CORE_SERVICE_URL=localhost \
+    ROOT_REDIRECT_URL=localhost \
     LOG_LEVEL=info
 
 USER 998
