@@ -38,11 +38,7 @@ To run service pull image from registry:
 
 Run downloaded image 
 
-    docker run -it -p 80:8080 \
-    -e MBAAS_HOST_BASE=yourserver.feedhenry.com \
-    -e MBAAS_PROTOCOL=https \
-    -e DNS_SERVER=8.8.8.8 \
-    -e CORE_SERVICE_URL=https://rhmap.yourdomain.net wtrocki/nginx-proxy:centos7
+    docker run -it -p 80:8080 -e MBAAS_HOST_BASE=yourserver.feedhenry.com wtrocki/nginx-proxy:centos7
 
 
 ## Environment variables
@@ -61,8 +57,8 @@ MbaaS protocol. By default https. Added for debug purposes
 DNS server that would be used to retrieve ips. 
 For internal networks you would need to specify your local DNS server.
 
+> ROOT_REDIRECT_URL `optional`
 
-> CORE_SERVICE_URL `optional`
+Full url that would be used when proxing without path (just hostname). For example: `https://yourdomain.net`
+You can redirect to any internal website that would be used as main website for nginx domain.
 
-Full url to RHMAP gui. For example: `https://rhmap.yourdomain.net`
-If you do not wish to redirect to core service please redirect to any internal website that would be used as base for this domain.
