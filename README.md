@@ -14,8 +14,6 @@ and I would map first element of the path into subdomain internally.
 
 Proxy root path (https://feedhenryplatform.net) would redirect to platform GUI
 
-![](http://m.memegen.com/952r4r.jpg)
-
 ## Runnning
 
 Depending on requirements users can lanuch this proxy as standalone docker container or use openshift. 
