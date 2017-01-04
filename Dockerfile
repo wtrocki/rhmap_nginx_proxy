@@ -21,6 +21,4 @@ ENV DNS_SERVER=8.8.8.8 \
     ROOT_REDIRECT_URL=localhost \
     LOG_LEVEL=info
 
-RUN ls -al /etc/nginx/
-
 CMD [ "nginx18" ]
