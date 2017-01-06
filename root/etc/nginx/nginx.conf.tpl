@@ -10,6 +10,11 @@ http {
         resolver ${DNS_SERVER};
         access_log /dev/stdout;
 
+        ## App init rewrite
+        location = /box/srv/1.1/app/init {
+           proxy_pass ${ROOT_REDIRECT_URL}/$request_uri;
+        }
+
         ## Match every first element of the path and proxy to subdomain 
         ## https://test.net/value/test will proxy to https://value.test.net/test
         location ~* ^/([^/]+)(.*) {
@@ -17,7 +22,7 @@ http {
             proxy_redirect ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE} /$1;
             proxy_cookie_path / /$1;
         }
-        
+
         ## Match root to proxy to platform gui.
         location = / {
             return 301 ${ROOT_REDIRECT_URL};
