@@ -32,31 +32,24 @@ Proxy can be launched on any operating system that supports docker (Windows, Lin
 
 To run service pull image from registry:
 
-    docker pull wtrocki/nginx-proxy:centos7
+    docker pull wtrocki/nginx-proxy:direct
 
 Run downloaded image 
 
-    docker run -it -p 80:8080 -e MBAAS_HOST_BASE=yourserver.feedhenry.com wtrocki/nginx-proxy:centos7
+    docker run -it -p 80:8080 -e ROOT_REDIRECT_URL=http://yourserver.feedhenry.com wtrocki/nginx-proxy:centos7
 
 
 ## Environment variables
 
-> MBAAS_HOST_BASE `required`
+> ROOT_REDIRECT_URL `required`
 
-OpenShift MbaaS hostname without subdomain part. 
-If your app has route `https://appname.mbaas.net`  then `MBAAS_HOST_BASE` should be set to `mbaas.net`
-
->  MBAAS_PROTOCOL `optional`
-
-MbaaS protocol. By default https. Added for debug purposes
-
+OpenShift MbaaS router URL
+ 
 > DNS_SERVER `optional`
 
 DNS server that would be used to retrieve ips. 
 For internal networks you would need to specify your local DNS server.
-
 > ROOT_REDIRECT_URL `optional`
 
 Full url that would be used when proxing without path (just hostname). For example: `https://yourdomain.net`
 You can redirect to any internal website that would be used as main website for nginx domain.
-

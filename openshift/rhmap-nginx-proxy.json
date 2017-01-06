@@ -9,12 +9,12 @@
     },
     "parameters": [
         {
-            "name": "MBAAS_HOST_BASE",
+            "name": "MBAAS_ROUTER_URL",
             "value": "",
-            "description": "base hostname (without subdomain) for mbaas",
+            "description": "MbaaS Router URL",
             "required": true
         },
-        {
+                {
             "name": "ROOT_REDIRECT_URL",
             "value": "http://localhost/invalid",
             "description": "Full url to RHMAP platform GUI. For example https://rhmap.yourdomain.com",
@@ -82,8 +82,8 @@
                                 ],
                                 "env": [
                                     {
-                                        "name": "MBAAS_HOST_BASE",
-                                        "value": "${MBAAS_HOST_BASE}"
+                                        "name": "MBAAS_ROUTER_URL",
+                                        "value": "${MBAAS_ROUTER_URL}"
                                     },
                                     {
                                         "name": "ROOT_REDIRECT_URL",
