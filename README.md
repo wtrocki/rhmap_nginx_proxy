@@ -7,12 +7,7 @@ mbaas requests outside OpenShift environment.
 
 Provide mapping and proxy between public nginx proxy and
 mbaas and core components running on openshift platform.
-By default proxy would use single hostname for every mbaas application 
-and I would map first element of the path into subdomain internally.
-
-> For example request to https://feedhenryplatform.net/yourapp/endpoint?test=3 will proxy to https://yourapp.feedhenryplatform.net/endpoint?test=3
-
-Proxy root path (https://feedhenryplatform.net) would redirect to platform GUI
+By default proxy would use single hostname for every mbaas application.
 
 ## Runnning
 

@@ -73,7 +73,7 @@
                         "containers": [
                             {
                                 "name": "nginx-proxy",
-                                "image": "wtrocki/nginx-proxy",
+                                "image": "wtrocki/nginx-proxy:direct",
                                 "ports": [
                                     {
                                         "containerPort": 8080,
