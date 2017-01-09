@@ -11,8 +11,8 @@ http {
         resolver ${DNS_SERVER};
         access_log /dev/stdout;
 
-	ssl on;
-	server_name "";
+        ssl on;
+        server_name "";
         ssl_certificate /etc/nginx/server.crt;
         ssl_certificate_key /etc/nginx/server.key;
         ssl_client_certificate /etc/nginx/ca.crt;
@@ -23,19 +23,10 @@ http {
            proxy_pass ${ROOT_REDIRECT_URL}/$request_uri;
 	}
 
-        ## Match every first element of the path and proxy to subdomain 
-        ## https://test.net/value/test will proxy to https://value.test.net/test
-        location ~* ^/([^/]+)(.*) {
-            add_header 'Access-Control-Allow-Origin' '*';
-            proxy_pass ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE}$2$is_args$args;
-            proxy_redirect ${MBAAS_PROTOCOL}://$1.${MBAAS_HOST_BASE} /$1;
-            proxy_cookie_path / /$1;
-        }
-        
         ## Redirect every request to mbaas router proxy
         location / {
             proxy_pass ${MBAAS_ROUTER_URL}/$request_uri;
-        }
+	}
 
         location = /favicon.ico {
             log_not_found off;
