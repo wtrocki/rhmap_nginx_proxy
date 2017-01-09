@@ -9,9 +9,9 @@
     },
     "parameters": [
         {
-            "name": "MBAAS_HOST_BASE",
+            "name": "MBAAS_ROUTER_URL",
             "value": "",
-            "description": "base hostname (without subdomain) for mbaas",
+            "description": "MbaaS Router URL",
             "required": true
         },
         {
@@ -73,7 +73,7 @@
                         "containers": [
                             {
                                 "name": "nginx-proxy",
-                                "image": "wtrocki/nginx-proxy",
+                                "image": "wtrocki/nginx-proxy:direct",
                                 "ports": [
                                     {
                                         "containerPort": 8080,
@@ -82,8 +82,8 @@
                                 ],
                                 "env": [
                                     {
-                                        "name": "MBAAS_HOST_BASE",
-                                        "value": "${MBAAS_HOST_BASE}"
+                                        "name": "MBAAS_ROUTER_URL",
+                                        "value": "${MBAAS_ROUTER_URL}"
                                     },
                                     {
                                         "name": "ROOT_REDIRECT_URL",
