@@ -21,12 +21,12 @@ http {
         ## Expose platform app init api
         location = /box/srv/1.1/app/init {
            proxy_pass ${ROOT_REDIRECT_URL}/$request_uri;
-	}
+        }
 
         ## Redirect every request to mbaas router proxy
         location / {
             proxy_pass ${MBAAS_ROUTER_URL}/$request_uri;
-	}
+        }
 
         location = /favicon.ico {
             log_not_found off;
