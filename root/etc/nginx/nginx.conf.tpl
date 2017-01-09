@@ -1,20 +1,28 @@
 daemon off;
 
+
 http {
     include /etc/nginx/proxy.conf;
     include /etc/nginx/mime.types;
 
     server {
-	    client_body_temp_path /tmp/nginx_client_temp 1 2;
-        listen 8080 default_server;
+        client_body_temp_path /tmp/nginx_client_temp 1 2;
+        listen 8080 default_server ssl;
         resolver ${DNS_SERVER};
         access_log /dev/stdout;
+
+        ssl on;
+        server_name "";
+        ssl_certificate /etc/nginx/server.crt;
+        ssl_certificate_key /etc/nginx/server.key;
+        ssl_client_certificate /etc/nginx/ca.crt;
+        ssl_verify_client on;
 
         ## Expose platform app init api
         location = /box/srv/1.1/app/init {
            proxy_pass ${ROOT_REDIRECT_URL}/$request_uri;
         }
-        
+
         ## Redirect every request to mbaas router proxy
         location / {
             proxy_pass ${MBAAS_ROUTER_URL}/$request_uri;
