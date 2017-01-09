@@ -14,7 +14,7 @@
             "description": "MbaaS Router URL",
             "required": true
         },
-                {
+        {
             "name": "ROOT_REDIRECT_URL",
             "value": "http://localhost/invalid",
             "description": "Full url to RHMAP platform GUI. For example https://rhmap.yourdomain.com",
