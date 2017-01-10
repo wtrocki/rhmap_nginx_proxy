@@ -36,9 +36,9 @@ Run downloaded image
 
 ## Environment variables
 
-> ROOT_REDIRECT_URL `required`
+> MBAAS_ROUTER_URL `required`
 
-OpenShift MbaaS router URL
+OpenShift MbaaS router URL prefix.
  
 > DNS_SERVER `optional`
 
