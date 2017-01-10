@@ -44,7 +44,7 @@ OpenShift MbaaS router URL prefix.
 
 DNS server that would be used to retrieve ips. 
 For internal networks you would need to specify your local DNS server.
-> ROOT_REDIRECT_URL `optional`
 
-Full url that would be used when proxing without path (just hostname). For example: `https://yourdomain.net`
-You can redirect to any internal website that would be used as main website for nginx domain.
+> ROOT_REDIRECT_URL `required`
+
+Redirect url to the core platform for app init purposes
