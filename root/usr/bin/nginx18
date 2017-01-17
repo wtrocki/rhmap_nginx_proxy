@@ -5,7 +5,6 @@ echo "Updating configuration"
 echo "      
       DNS SERVER ${DNS_SERVER}
       BASE_HOST ${BASE_HOST}
-      APP_HOST_BASE ${APP_HOST_BASE}
       LOG_LEVEL ${LOG_LEVEL}
 " 
 

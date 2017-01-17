@@ -41,14 +41,10 @@ Run downloaded image
 
 ## Environment variables
 
-> APP_HOST_BASE `required`
-
-OpenShift MbaaS hostname without subdomain part. 
-If your app has route `https://appname.mbaas.net`  then `MBAAS_HOST_BASE` should be set to `mbaas.net`
-
 >  BASE_HOST `optional`
 
-Full base host url that would be used to proxy to the mbaas
+Full base host url that would be used to proxy to the mbaas, core and apps.
+It represents openshift router dns without wildcard.
 
 > DNS_SERVER `optional`
 
