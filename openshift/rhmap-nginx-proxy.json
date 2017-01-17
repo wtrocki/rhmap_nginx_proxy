@@ -11,13 +11,7 @@
         {
             "name": "BASE_HOST",
             "value": "http://localhost",
-            "description": "Full url to core platform. For example https://rhmap.yourdomain.com",
-            "required": false
-        },
-         {
-            "name": "APP_HOST_BASE",
-            "value": "",
-            "description": "Base domain from app subdomain ",
+            "description": "OpenShift router domain that would be used to proxy to subdomains",
             "required": true
         },
         {
@@ -82,12 +76,8 @@
                                 ],
                                 "env": [
                                     {
-                                        "name": "MBAAS_HOST_BASE",
-                                        "value": "${MBAAS_HOST_BASE}"
-                                    },
-                                    {
-                                        "name": "ROOT_REDIRECT_URL",
-                                        "value": "${ROOT_REDIRECT_URL}"
+                                        "name": "BASE_HOST",
+                                        "value": "${BASE_HOST}"
                                     }
                                 ],
                                 "resources": {},
