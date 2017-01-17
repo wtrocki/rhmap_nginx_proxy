@@ -9,15 +9,9 @@
     },        
     "parameters": [
         {
-            "name": "CORE_URL",
+            "name": "BASE_HOST",
             "value": "http://localhost",
             "description": "Full url to core platform. For example https://rhmap.yourdomain.com",
-            "required": false
-        },
-        {
-            "name": "MBAAS_COMPONENT_URL",
-            "value": "http://localhost",
-            "description": "Full url to mbaas platform component. For example https://mbaas.yourdomain.com",
             "required": false
         },
          {

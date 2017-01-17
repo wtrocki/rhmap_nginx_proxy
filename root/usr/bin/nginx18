@@ -4,15 +4,13 @@ set -e -o pipefail
 echo "Updating configuration"
 echo "      
       DNS SERVER ${DNS_SERVER}
-      CORE_URL ${CORE_URL}
-      MBAAS_COMPONENT_URL ${MBAAS_COMPONENT_URL}
+      BASE_HOST ${BASE_HOST}
       APP_HOST_BASE ${APP_HOST_BASE}
       LOG_LEVEL ${LOG_LEVEL}
 " 
 
 envsubst '${DNS_SERVER}
-          ${CORE_URL}
-          ${MBAAS_COMPONENT_URL}
+          ${BASE_HOST}
           ${APP_HOST_BASE}
           ${LOG_LEVEL}' < "/etc/nginx/nginx.conf.template" > "/etc/nginx/nginx.conf"
 

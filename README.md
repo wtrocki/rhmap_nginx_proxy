@@ -46,13 +46,9 @@ Run downloaded image
 OpenShift MbaaS hostname without subdomain part. 
 If your app has route `https://appname.mbaas.net`  then `MBAAS_HOST_BASE` should be set to `mbaas.net`
 
->  MBAAS_COMPONENT_URL `optional`
+>  BASE_HOST `optional`
 
-Full mbaas component url that would be used to proxy to the mbaas
-
-> CORE_URL `optional`
-
-Full core platform url that would be used to proxy to the platform.
+Full base host url that would be used to proxy to the mbaas
 
 > DNS_SERVER `optional`
 
