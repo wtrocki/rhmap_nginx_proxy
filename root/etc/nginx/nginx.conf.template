@@ -13,16 +13,16 @@ http {
         ## Expose core platform millicore and security endpoints that are used to perform 
         ## Mobile app init (retrieving the actual app url basing on connection tag)
         location ~* ^/core/box/srv/1.1/(.*) {
-           proxy_pass ${CORE_URL}/box/srv/1.1/$1$is_args$args;
-           proxy_redirect ${CORE_URL} /core;
+           proxy_pass ${BASE_HOST}/box/srv/1.1/$1$is_args$args;
+           proxy_redirect ${BASE_HOST} /core;
            proxy_cookie_path / /core;
         }
 
         ## Expose url to external mbaas component used when setting up nginx proxy on separate mbaas
         ## Core would need to call mbaas metrics endpoints to determine if it's working properly.
         location ~* ^/mbaas/(.*) {
-           proxy_pass ${MBAAS_COMPONENT_URL}/$1$is_args$args;
-           proxy_redirect ${MBAAS_COMPONENT_URL} /mbaas;
+           proxy_pass ${BASE_HOST}/$1$is_args$args;
+           proxy_redirect ${BASE_HOST} /mbaas;
            proxy_cookie_path / /mbaas;
         }
 
