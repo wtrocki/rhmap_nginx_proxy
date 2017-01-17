@@ -6,18 +6,24 @@
         "name": "nginx-proxy",
         "description": "RHMAP proxy",
         "tags": "rhmap,mobile,nginx,proxy"
-    },
+    },        
     "parameters": [
         {
-            "name": "MBAAS_HOST_BASE",
-            "value": "",
-            "description": "base hostname (without subdomain) for mbaas",
-            "required": true
+            "name": "CORE_URL",
+            "value": "http://localhost",
+            "description": "Full url to core platform. For example https://rhmap.yourdomain.com",
+            "required": false
         },
         {
-            "name": "ROOT_REDIRECT_URL",
-            "value": "http://localhost/invalid",
-            "description": "Full url to RHMAP platform GUI. For example https://rhmap.yourdomain.com",
+            "name": "MBAAS_COMPONENT_URL",
+            "value": "http://localhost",
+            "description": "Full url to mbaas platform component. For example https://mbaas.yourdomain.com",
+            "required": false
+        },
+         {
+            "name": "APP_HOST_BASE",
+            "value": "",
+            "description": "Base domain from app subdomain ",
             "required": true
         },
         {

@@ -14,9 +14,9 @@ and I would map first element of the path into subdomain internally.
 
 Proxy root path (https://feedhenryplatform.net) would redirect to platform GUI
 
-## Runnning
+## Running
 
-Depending on requirements users can lanuch this proxy as standalone docker container or use openshift. 
+Depending on requirements users can launch this proxy as standalone docker container or use openshift. 
 
 ### OpenShift 
 
@@ -41,22 +41,24 @@ Run downloaded image
 
 ## Environment variables
 
-> MBAAS_HOST_BASE `required`
+> APP_HOST_BASE `required`
 
 OpenShift MbaaS hostname without subdomain part. 
 If your app has route `https://appname.mbaas.net`  then `MBAAS_HOST_BASE` should be set to `mbaas.net`
 
->  MBAAS_PROTOCOL `optional`
+>  MBAAS_COMPONENT_URL `optional`
 
-MbaaS protocol. By default https. Added for debug purposes
+Full mbaas component url that would be used to proxy to the mbaas
+
+> CORE_URL `optional`
+
+Full core platform url that would be used to proxy to the platform.
 
 > DNS_SERVER `optional`
 
 DNS server that would be used to retrieve ips. 
 For internal networks you would need to specify your local DNS server.
 
-> ROOT_REDIRECT_URL `optional`
+> LOG_LEVEL `optional` 
 
-Full url that would be used when proxing without path (just hostname). For example: `https://yourdomain.net`
-You can redirect to any internal website that would be used as main website for nginx domain.
-
+Nginx log level. By default it's INFO.

@@ -16,9 +16,9 @@ RUN chmod 777 -Rf /var/opt/rh/rh-nginx18 && \
 
 ## Default values for required environment variables
 ENV DNS_SERVER=8.8.8.8 \
-    MBAAS_HOST_BASE=localhost  \
-    MBAAS_PROTOCOL=https       \
-    ROOT_REDIRECT_URL=localhost \
+    CORE_URL=localhost  \
+    MBAAS_COMPONENT_URL=localhost       \
+    APP_HOST_BASE=localhost \
     LOG_LEVEL=info
 
 CMD [ "nginx18" ]
