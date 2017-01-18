@@ -10,13 +10,13 @@
     "parameters": [
         {
             "name": "BASE_HOST",
-            "value": "http://localhost",
+            "value": "osm3.feedhenry.net",
             "description": "OpenShift router domain that would be used to proxy to subdomains",
             "required": true
         },
         {
             "name": "EXTERNAL_ROUTE",
-            "value": "",
+            "value": "wild.osm3.feedhenry.net",
             "description": "External route to be created on router. Leave empty to autogenerate",
             "required": false
         }
